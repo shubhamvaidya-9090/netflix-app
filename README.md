@@ -294,7 +294,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', url: 'https://github.com/N4si/DevSecOps-Project.git'
+                git branch: 'main', url: 'https://github.com/shubhamvaidya-9090/netflix-app.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -332,16 +332,16 @@ pipeline{
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                       sh "docker build --build-arg TMDB_V3_API_KEY=<yourapikey> -t netflix ."
-                       sh "docker tag netflix nasi101/netflix:latest "
-                       sh "docker push nasi101/netflix:latest "
+                       sh "docker build --build-arg TMDB_V3_API_KEY=834862f9d6f37cefe587ab4c1e249903 -t netflix ."
+                       sh "docker tag netflix iamshubhamvaidya520/netflix:${BUILD_NUMBER}"
+                       sh "docker push iamshubhamvaidya520/netflix:${BUILD_NUMBER}"
                     }
                 }
             }
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image nasi101/netflix:latest > trivyimage.txt" 
+                sh "trivy image iamshubhamvaidya520/netflix:${BUILD_NUMBER} > trivyimage.txt" 
             }
         }
         stage('Deploy to container'){
